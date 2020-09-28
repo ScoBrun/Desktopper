@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,33 +20,38 @@ namespace DesktopLayoutLoader
 
         /// <summary>
         /// Handler function for "Save Layout" button.
+        /// NOTE: Currently, this doesn't remember exact icon layouts and assumes the software itself is installed.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btn_save_layout_Click(object sender, EventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog();
+            SaveFileDialog safeFileDialog = new SaveFileDialog();
 
-            // Initial directory is "My Documents" folder.
-            sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            sfd.RestoreDirectory = true;
+            // Initial directory.
+            safeFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            safeFileDialog.RestoreDirectory = true;
 
-            // Default extension for registration files.
-            sfd.DefaultExt = "reg";
-            sfd.Filter = "Registration Files (.reg)|*.reg";
+            // Default extension for files.
+            safeFileDialog.DefaultExt = "reg";
+            safeFileDialog.Filter = "Registration Files|*.reg";
 
-            // Set properties so user is prompted to create/overwrite if the registration file doesn't exist.
-            sfd.CreatePrompt = true;
-            sfd.OverwritePrompt = true;
-            sfd.AddExtension = true;
+            // Set properties.
+            safeFileDialog.CreatePrompt = false;
+            safeFileDialog.OverwritePrompt = true;
+            safeFileDialog.AddExtension = true;
 
-            if (sfd.ShowDialog() == DialogResult.OK)
+            if (safeFileDialog.ShowDialog() == DialogResult.OK)
             {
-                // TODO - DO SOMETHING!
+                String keypath = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband";
+                String filepath = Path.GetFullPath(safeFileDialog.FileName);
+
+                RegistryHelper registryHelper = new RegistryHelper();
+                registryHelper.export(keypath, filepath);
+
+                // This should show if all goes well.
+                MessageBox.Show("Registry file has been exported to: " + filepath, "Task completed.");
             }
-
-
-
 
         }
 
@@ -56,7 +62,7 @@ namespace DesktopLayoutLoader
         /// <param name="e"></param>
         private void btn_load_layout_Click(object sender, EventArgs e)
         {
-
+            // TODO
         }
     }
 }
