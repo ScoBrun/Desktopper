@@ -6,7 +6,11 @@
   </a>
 </p>
 
-> A handy wee tool to backup and restore your Windows 10 Desktop the way you like it. 
+> A wee tool to backup and restore your Windows 10 Desktop how you like it. 
+
+![Features only two buttons because that's all you need!](https://raw.githubusercontent.com/ScoBrun/DesktopLayoutLoader/master/pic.png)
+
+
 
 ## Install
 
