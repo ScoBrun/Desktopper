@@ -43,10 +43,36 @@ namespace Desktopper
             }
         }
 
-        public void import()
+        /// <summary>
+        /// Imports the required key from the provided .reg file.
+        /// </summary>
+        /// <param name="filePath">The absolute path to the registry file to import.</param>
+        internal void import(string filePath)
         {
-            // TODO
-            // Also, this would require some method of checking this is a registry file that could fit in the provided path.
+            try
+            {
+                using (Process proc = new Process())
+                {
+                    proc.StartInfo.FileName = "reg.exe";
+                    proc.StartInfo.Arguments = "import \"" + filePath + "\"";
+
+                    proc.StartInfo.UseShellExecute = false;
+                    proc.StartInfo.RedirectStandardOutput = true;
+                    proc.StartInfo.RedirectStandardError = true;
+                    proc.StartInfo.CreateNoWindow = true;
+
+                    proc.Start();
+
+                    string stdout = proc.StandardOutput.ReadToEnd();
+                    string stderr = proc.StandardError.ReadToEnd();
+
+                    proc.WaitForExit();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error");
+            }
         }
     }
 }

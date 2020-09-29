@@ -56,13 +56,31 @@ namespace Desktopper
         }
 
         /// <summary>
-        /// 
+        /// Handler function for "Load Layout" button.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btn_load_layout_Click(object sender, EventArgs e)
         {
-            // TODO
+            var filePath = String.Empty;
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                openFileDialog.RestoreDirectory = true;
+                openFileDialog.DefaultExt = "reg";
+                openFileDialog.Filter = "Registration Files|*.reg";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    filePath = openFileDialog.FileName;
+                }
+            }
+
+            RegistryHelper registryHelper = new RegistryHelper();
+            registryHelper.import(filePath);
+
+            MessageBox.Show("Finished! Please restart explorer.exe to see changes.", "Finished importing keys..");
         }
     }
 }
