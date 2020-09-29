@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace DesktopLayoutLoader
+namespace Desktopper
 {
 
     /// <summary>

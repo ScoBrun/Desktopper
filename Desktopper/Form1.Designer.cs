@@ -1,4 +1,4 @@
-﻿namespace DesktopLayoutLoader
+﻿namespace Desktopper
 {
     partial class Form1
     {
