@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System;s
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -26,33 +26,29 @@ namespace Desktopper
         /// <param name="e"></param>
         private void btn_save_layout_Click(object sender, EventArgs e)
         {
-            SaveFileDialog safeFileDialog = new SaveFileDialog();
+            var keypath = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband";
+            var filepath = String.Empty;
 
-            // Initial directory.
-            safeFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            safeFileDialog.RestoreDirectory = true;
-
-            // Default extension for files.
-            safeFileDialog.DefaultExt = "reg";
-            safeFileDialog.Filter = "Registration Files|*.reg";
-
-            // Set properties.
-            safeFileDialog.CreatePrompt = false;
-            safeFileDialog.OverwritePrompt = true;
-            safeFileDialog.AddExtension = true;
-
-            if (safeFileDialog.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-                String keypath = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband";
-                String filepath = Path.GetFullPath(safeFileDialog.FileName);
+                saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                saveFileDialog.RestoreDirectory = true;
+                saveFileDialog.DefaultExt = "reg";
+                saveFileDialog.Filter = "Registration Files|*.reg";
+                saveFileDialog.CreatePrompt = false;
+                saveFileDialog.OverwritePrompt = true;
+                saveFileDialog.AddExtension = true;
 
-                RegistryHelper registryHelper = new RegistryHelper();
-                registryHelper.export(keypath, filepath);
-
-                // This should show if all goes well.
-                MessageBox.Show("Registry file has been exported to: " + filepath, "Task completed.");
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    filepath = Path.GetFullPath(saveFileDialog.FileName);
+                }
             }
 
+            RegistryHelper registryHelper = new RegistryHelper();
+            registryHelper.export(keypath, filepath);
+
+            MessageBox.Show("Registry file has been exported to: " + filepath, "Task completed.");
         }
 
         /// <summary>

@@ -10,12 +10,11 @@ namespace Desktopper
     /// </summary>
     class RegistryHelper
     {
-
         /// <summary>
-        /// This function uses "reg.exe" to export the required key to a .reg file.
+        /// Exports the required key to a specified .reg file.
         /// </summary>
-        /// <param name="keypath">Path to key to be exported.</param>
-        /// <param name="filepath">Location of exported key.</param>
+        /// <param name="keypath">Path to registry we are exporting.</param>
+        /// <param name="filepath">The absolute path to the file to export the registry data to.</param>
         public void export(String keypath, String filepath)
         {
             try
@@ -31,8 +30,10 @@ namespace Desktopper
                     proc.StartInfo.CreateNoWindow = true;
 
                     proc.Start();
+
                     string stdout = proc.StandardOutput.ReadToEnd();
                     string stderr = proc.StandardError.ReadToEnd();
+
                     proc.WaitForExit();
                 }
 
