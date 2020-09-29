@@ -12,6 +12,21 @@
 
 
 
+## Features
+- Minimal UX. Only uses two buttons.
+- Export the taskbar icons as a registry (.reg) file.
+- Import registry files.
+- Doesn't require UAC for user changes.
+
+
+
+## Proposed features roadmap
+
+- [ ] Manage taskbar position and colour.
+- [ ] Manage start menu tiles.
+- [ ] Batch import/export utilizing zip.
+- [ ] Tickbox UI
+
 ## Install
 
 ```sh
